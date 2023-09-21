@@ -108,24 +108,24 @@ def agent_classifier_function():
         # if prompts 1 and 3 are selected
         if selected_prompt in [1,3]:
             nl_response = fn_agent_1(user_query+'re check your answer based on data provided')
-        else:
-            pass
-
-        model_name = "gpt-3.5-turbo-0613"
-        temperature = 0.0
-        model = OpenAI(model_name=model_name, temperature=temperature)
-
-        # result we will get would be steps to solve the problem
-        structured_data = steps_table1_from_prompts (selected_prompt,user_query)
-        print("structured_data  --->",structured_data)
-        if structured_data!=0:
-            # Number of steps to solve the problem
-            number_of_steps = len(structured_data)
-
-            # to get the final answer in a natural language like response
-            natural_response = final_answer_creator(structured_data,user_query)
-        
             return jsonify({'Natural_response':natural_response})
+        else:
+
+            model_name = "gpt-3.5-turbo-0613"
+            temperature = 0.0
+            model = OpenAI(model_name=model_name, temperature=temperature)
+
+            # result we will get would be steps to solve the problem
+            structured_data = steps_table1_from_prompts (selected_prompt,user_query)
+            print("structured_data  --->",structured_data)
+            if structured_data!=0:
+                # Number of steps to solve the problem
+                number_of_steps = len(structured_data)
+
+                # to get the final answer in a natural language like response
+                natural_response = final_answer_creator(structured_data,user_query)
+            
+                return jsonify({'Natural_response':natural_response})
 
 # driver function
 if __name__ == '__main__':
